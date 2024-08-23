@@ -149,14 +149,14 @@ namespace im_bored.snek_franchise{
         }
         private void LoadTextures(){
             Console.WriteLine("Loading assets...");
-            _texRegistry.Register("snake_straight",ImBored.TryLoadTexture(@"\snek2\snake_straight.png"));
-            _texRegistry.Register("snake_head",ImBored.TryLoadTexture(@"\snek2\snake_head.png"));
-            _texRegistry.Register("snake_curve",ImBored.TryLoadTexture(@"\snek2\snake_curve.png"));
-            _texRegistry.Register("snake_tail",ImBored.TryLoadTexture(@"\snek2\snake_tail.png"));
-            _texRegistry.Register("food",ImBored.TryLoadTexture(@"\snek2\food.png"));
-            _texRegistry.Register("background",ImBored.TryLoadTexture(@"\snek2\background.png"));
-            _texRegistry.Register("overlay",ImBored.TryLoadTexture(@"\snek2\overlay.png"));
-            _texRegistry.Register("gameover",ImBored.TryLoadTexture(@"\snek2\gameover.png"));
+            _texRegistry.Register("snake_straight",ImBored.TryLoadTexture(@"snek2\snake_straight.png"));
+            _texRegistry.Register("snake_head",ImBored.TryLoadTexture(@"snek2\snake_head.png"));
+            _texRegistry.Register("snake_curve",ImBored.TryLoadTexture(@"snek2\snake_curve.png"));
+            _texRegistry.Register("snake_tail",ImBored.TryLoadTexture(@"snek2\snake_tail.png"));
+            _texRegistry.Register("food",ImBored.TryLoadTexture(@"snek2\food.png"));
+            _texRegistry.Register("background",ImBored.TryLoadTexture(@"snek2\background.png"));
+            _texRegistry.Register("overlay",ImBored.TryLoadTexture(@"snek2\overlay.png"));
+            _texRegistry.Register("gameover",ImBored.TryLoadTexture(@"snek2\gameover.png"));
             Console.WriteLine("Assets loaded successfully");
         }
         private static Vector2f GetScreenPoint(math.Vector2i v){
