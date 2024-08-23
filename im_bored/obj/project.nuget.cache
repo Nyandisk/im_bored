@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "7zpUHi7oq7Z+tNPLOCQ9YvQTkxhmTXgojLevl6qXd/43vX2HUhbfCIln/8RwMeFsW7G3vD8tq6ClFMKrL+NbTw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\user\\im_bored\\im_bored\\im_bored.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\user\\.nuget\\packages\\csfml\\2.6.1\\csfml.2.6.1.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\sfml.audio\\2.6.0\\sfml.audio.2.6.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\sfml.graphics\\2.6.0\\sfml.graphics.2.6.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\sfml.net\\2.6.0\\sfml.net.2.6.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\sfml.system\\2.6.0\\sfml.system.2.6.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\sfml.window\\2.6.0\\sfml.window.2.6.0.nupkg.sha512"
+  ],
+  "logs": []
+}
