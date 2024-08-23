@@ -12,27 +12,44 @@ namespace im_bored.snek_franchise{
         private readonly Random _random = new();
         private bool _gameOver = false;
         string _gameOverReason = "";
+        private static readonly int _mapWidth = 20;
+        private static readonly int _mapHeight = 12;
         public Snek(){
             _snekParts = [];
             for (int i = 0; i < _snekLength; i++){
                 _snekParts.Add(new(_snekLocation.X - i, _snekLocation.Y));
             }
-            _displayBuffer = [
-                ['+','-','-','-','-','-','-','+'],
-                ['|',' ',' ',' ',' ',' ',' ','|'],
-                ['|',' ',' ',' ',' ',' ',' ','|'],
-                ['|',' ',' ',' ',' ',' ',' ','|'],
-                ['|',' ',' ',' ',' ',' ',' ','|'],
-                ['|',' ',' ',' ',' ',' ',' ','|'],
-                ['|',' ',' ',' ',' ',' ',' ','|'],
-                ['+','-','-','-','-','-','-','+'],
-            ];
+            _displayBuffer = GenerateEmptyArena();
+        }
+        private static char[][] GenerateEmptyArena(){
+            char[][] buf = new char[_mapHeight][];
+            for (int i = 0; i < _mapHeight; i++){
+                buf[i] = new char[_mapWidth];
+            }
+            for (int j = 0; j < _mapHeight; j++){
+                for(int k = 0; k < _mapWidth; k++){
+                    buf[j][k] = ' ';
+                }
+            }
+            for (int x = 0; x < _mapWidth; x++){
+                buf[0][x] = '-';
+                buf[_mapHeight-1][x] = '-';
+            }
+            for (int y = 0; y < _mapHeight; y++){
+                buf[y][0] = '|';
+                buf[y][_mapWidth-1] = '|';
+            }
+            buf[0][0] = '+';
+            buf[0][_mapWidth-1] = '+';
+            buf[_mapHeight-1][0] = '+';
+            buf[_mapHeight-1][_mapWidth-1] = '+';
+            return buf;
         }
         private void RegenerateFood(){
             _displayBuffer[_foodLocation.Y][_foodLocation.X] = ' ';
             while(true){
-                _foodLocation = new(_random.Next(1,7),_random.Next(1,7));
-                if(!_snekParts.Where(p => p == _foodLocation).Any()) break;
+                _foodLocation = new(_random.Next(1,_mapWidth-2),_random.Next(1,_mapHeight-2));
+                if(!_snekParts.Where(p => p == _foodLocation).Any() && _snekLocation != _foodLocation) break;
             }
             _displayBuffer[_foodLocation.Y][_foodLocation.X] = 'F';
         }
@@ -75,7 +92,7 @@ namespace im_bored.snek_franchise{
                 _snekParts[i] = _snekParts[i-1];
             }
             _snekParts[0] = _snekLocation;
-            if (_snekLocation.X < 1 || _snekLocation.X > 6 || _snekLocation.Y < 1 || _snekLocation.Y > 6){
+            if (_snekLocation.X < 1 || _snekLocation.X > _mapWidth-2 || _snekLocation.Y < 1 || _snekLocation.Y > _mapHeight-2){
                 GameOver("Out of bounds!");
                 return;
             }
@@ -107,7 +124,7 @@ namespace im_bored.snek_franchise{
                 ProcessInput();
                 Tick();
                 Console.Clear();
-                for (int y = 0; y < 8; y++){
+                for (int y = 0; y < _mapHeight; y++){
                     Console.Write(_displayBuffer[y]);
                     Console.Write("\n");
                 }
