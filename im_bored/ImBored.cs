@@ -1,9 +1,9 @@
-﻿using System.Reflection;
-using im_bored.snek_franchise;
+﻿using im_bored.snek_franchise;
+using im_bored.tic_tac_toe;
 using SFML.Graphics;
 namespace im_bored{
     public class ImBored{
-        private static readonly string ASSET_DIR = Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location) + @"\assets\";
+        private static readonly string ASSET_DIR = AppContext.BaseDirectory + @"assets\";
         private static readonly Texture MISSING = new(ASSET_DIR + "missing.png");
         public static Texture TryLoadTexture(string path){
             try{
@@ -34,10 +34,10 @@ namespace im_bored{
         }
         public static void Main(string[] args){
             while(true){
-                Console.WriteLine("i'm bored: v0.2.8\npress any key to enter menu...");
+                Console.WriteLine("i'm bored: v0.3.2\npress any key to enter menu...");
                 Console.ReadKey();
                 Console.Clear();
-                switch(AskChoice(["console snake", "graphical snake\n = other = ", "quit"],"choose something to do\n = snek franchise = ")){
+                switch(AskChoice(["console snake", "graphical snake\n = tic-tac-toe = ", "console tic-tac-toe\n = other = ", "quit"],"choose something to do\n = snek franchise = ")){
                     case 1:
                         Snek snek1 = new();
                         snek1.Run();
@@ -47,6 +47,10 @@ namespace im_bored{
                         snek2.Run();
                         break;
                     case 3:
+                        TTT ttt = new();
+                        ttt.Run();
+                        break;
+                    case 4:
                         Environment.Exit(0);
                         break;
                     default:
