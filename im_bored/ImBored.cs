@@ -37,7 +37,13 @@ namespace im_bored{
                 Console.WriteLine("i'm bored: v0.3.2\npress any key to enter menu...");
                 Console.ReadKey();
                 Console.Clear();
-                switch(AskChoice(["console snake", "graphical snake\n = tic-tac-toe = ", "console tic-tac-toe\n = other = ", "quit"],"choose something to do\n = snek franchise = ")){
+                switch(AskChoice([
+                    "snek 1 (console)",
+                    "snek 2 (sfml)\n = tic-tac-toe = ",
+                    "tic-tac-toe (console)",
+                    "dissolve tic-tac-toe (sfml & mp)\n = other = ",
+                    "quit"
+                    ],"choose something to do\n = snek franchise = ")){
                     case 1:
                         Snek snek1 = new();
                         snek1.Run();
@@ -51,6 +57,8 @@ namespace im_bored{
                         ttt.Run();
                         break;
                     case 4:
+                        break;
+                    case 5:
                         Environment.Exit(0);
                         break;
                     default:
