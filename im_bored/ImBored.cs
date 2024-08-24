@@ -32,7 +32,7 @@ namespace im_bored{
                 return result;
             }
         }
-        public static void Main(string[] args){
+        public static void Main(){
             while(true){
                 Console.WriteLine("i'm bored: v0.3.5\npress any key to enter menu...");
                 Console.ReadKey();

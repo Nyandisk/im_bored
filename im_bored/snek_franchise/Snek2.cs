@@ -12,27 +12,30 @@ namespace im_bored.snek_franchise{
             RIGHT,
             DOWN
         }
-        private readonly Registry<Texture> _texRegistry = new("tex2d");
-        private readonly List<Line2i> _debugLines = [];
-        private RenderWindow _window;
-        private VideoMode _vMode;
-        private Clock _deltaClock = new();
         private float _delta;
         private const int _gridSize = 16;
         private int _snekLength = 3;
         private math.Vector2i _mapSize = new(10,10);
         private math.Vector2i _snekDirection = new(1,0);
         private math.Vector2i _snekLocation = new(1,5);
+        private math.Vector2i _foodLocation;
         private IntRect _snekHeadRect = new(0,0,16,16);
         private float _snekMoveTimer;
+        private int _graceTurnCounter = 0;
+        private bool _gameOver = false;
         private const float _snekMoveSpeed = 1/3f; // every x seconds
+        private const int _graceTurns = 1;
+        private readonly Registry<Texture> _texRegistry = new("tex2d");
+        private readonly List<Line2i> _debugLines = [];
+        private readonly RenderWindow _window;
+        private readonly VideoMode _vMode;
+        private readonly Clock _deltaClock = new();
         private readonly List<Sprite> _snekParts;
         private readonly Queue<SnekMove> _queuedSnekMoves = [];
         private readonly Sprite _foodSprite;
         private readonly Sprite _backgroundSprite;
         private readonly Sprite _overlay;
         private readonly Sprite _gameOverOverlay;
-        private math.Vector2i _foodLocation;
         private readonly Random _random = new();
         private readonly Texture _snekStraight;
         private readonly Texture _snekCurve;
@@ -44,10 +47,8 @@ namespace im_bored.snek_franchise{
         private static readonly IntRect _frame4 = new(_gridSize*3,0,_gridSize,_gridSize);
         // the following cannot be forgiven 
         private static readonly Vector2f _sfmlZero = new();
-        private bool _debug = false;
-        private const int _graceTurns = 1;
-        private int _graceTurnCounter = 0;
-        private bool _gameOver = false;
+
+        private static bool _debug = false;
         public Snek2(){
             _vMode = new((uint)(_gridSize * _mapSize.X), (uint)(_gridSize * _mapSize.Y));
             _window = new(_vMode,"snek 2: the forgotten snek", Styles.Close){
@@ -286,6 +287,7 @@ namespace im_bored.snek_franchise{
                 Render(_window);
                 _window.Display();
             }
+            _texRegistry.FreeRegistry();
             Console.WriteLine($"GC {GC.GetTotalMemory(true)}");
         }
     }
