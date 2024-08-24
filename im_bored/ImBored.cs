@@ -34,7 +34,7 @@ namespace im_bored{
         }
         public static void Main(string[] args){
             while(true){
-                Console.WriteLine("i'm bored: v0.3.3\npress any key to enter menu...");
+                Console.WriteLine("i'm bored: v0.3.5\npress any key to enter menu...");
                 Console.ReadKey();
                 Console.Clear();
                 switch(AskChoice([

@@ -22,7 +22,11 @@ namespace im_bored.net{
             Header = header;
             Data = Encoding.UTF8.GetBytes(data);
         }
-        public byte[] GetBytes(){
+        public Packet(byte[] data){
+            Header = (PacketHeader)data[0];
+            Data = data[1..];
+        }
+        private byte[] GetBytes(){
             byte[] bytes = new byte[Data.Length + 1];
             bytes[0] = (byte)Header;
             Array.Copy(Data,0,bytes,1,Data.Length);
@@ -31,5 +35,6 @@ namespace im_bored.net{
         public override string ToString(){
             return $"{Header}|{StringData}({Data})|{Size}";
         }
+        public static implicit operator ReadOnlySpan<byte>(Packet packet) => packet.GetBytes();
     }
 }
