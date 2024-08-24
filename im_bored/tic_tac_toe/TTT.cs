@@ -1,50 +1,66 @@
-namespace im_bored.tic_tac_toe{
-    public class TTT{
-        private class Board{
+namespace im_bored.tic_tac_toe
+{
+    public class TTT
+    {
+        private class Board
+        {
             private readonly char[] _boardChars;
-            public Board(){
+            public Board()
+            {
                 _boardChars = [
                     ' ',' ',' ',
                     ' ',' ',' ',
-                    ' ',' ',' '    
+                    ' ',' ',' '
                 ];
             }
-            public Board Copy(){
+            public Board Copy()
+            {
                 Board board = new();
-                Array.Copy(_boardChars,board._boardChars,_boardChars.Length);
+                Array.Copy(_boardChars, board._boardChars, _boardChars.Length);
                 return board;
             }
-            private char CheckRow(int y) {
-                if (_boardChars[y * 3] == _boardChars[y * 3 + 1] && _boardChars[y * 3 + 1] == _boardChars[y * 3 + 2]) {
+            private char CheckRow(int y)
+            {
+                if (_boardChars[y * 3] == _boardChars[y * 3 + 1] && _boardChars[y * 3 + 1] == _boardChars[y * 3 + 2])
+                {
                     return _boardChars[y * 3];
                 }
                 return ' ';
             }
-            private char CheckCol(int x) {
-                if (_boardChars[x] == _boardChars[1 * 3 + x] && _boardChars[1 * 3 + x] == _boardChars[2 * 3 + x]) {
+            private char CheckCol(int x)
+            {
+                if (_boardChars[x] == _boardChars[1 * 3 + x] && _boardChars[1 * 3 + x] == _boardChars[2 * 3 + x])
+                {
                     return _boardChars[x];
                 }
                 return ' ';
             }
-            private char CheckDiagonals(){
-                if (_boardChars[0] == _boardChars[4] && _boardChars[4] == _boardChars[8]){
+            private char CheckDiagonals()
+            {
+                if (_boardChars[0] == _boardChars[4] && _boardChars[4] == _boardChars[8])
+                {
                     return _boardChars[0];
                 }
-                if (_boardChars[2] == _boardChars[4] && _boardChars[4] == _boardChars[6]){
+                if (_boardChars[2] == _boardChars[4] && _boardChars[4] == _boardChars[6])
+                {
                     return _boardChars[2];
                 }
                 return ' ';
             }
-            public int[] GetFreeIndices(){
-                return [.._boardChars.Select((c,i) => new{c,i}).Where(x => x.c == ' ').Select(x => x.i)];
+            public int[] GetFreeIndices()
+            {
+                return [.. _boardChars.Select((c, i) => new { c, i }).Where(x => x.c == ' ').Select(x => x.i)];
             }
-            public char CheckState(){
-                for (int col = 0; col < 3; col++){
+            public char CheckState()
+            {
+                for (int col = 0; col < 3; col++)
+                {
                     char result = CheckCol(col);
                     if (result == ' ') continue;
                     return result;
                 }
-                for (int row = 0; row < 3; row++){
+                for (int row = 0; row < 3; row++)
+                {
                     char result = CheckRow(row);
                     if (result == ' ') continue;
                     return result;
@@ -55,10 +71,12 @@ namespace im_bored.tic_tac_toe{
                 }
                 return GetFreeIndices().Length == 0 ? 'T' : ' ';
             }
-            public void MakeMove(int index, char who){
+            public void MakeMove(int index, char who)
+            {
                 _boardChars[index] = who;
             }
-            public void PrintBoard(){
+            public void PrintBoard()
+            {
                 Console.WriteLine($" {_boardChars[0]} | {_boardChars[1]} | {_boardChars[2]} ");
                 Console.WriteLine($"---+---+---");
                 Console.WriteLine($" {_boardChars[3]} | {_boardChars[4]} | {_boardChars[5]} ");
@@ -69,51 +87,64 @@ namespace im_bored.tic_tac_toe{
         private readonly Board _gameBoard = new();
         private char _currentTurn = 'X';
         private readonly Random _random = new();
-        private int AskMove(){
-            while(true){
+        private int AskMove()
+        {
+            while (true)
+            {
                 Console.Write("Enter board coordinate (1-9): ");
                 bool success = int.TryParse(Console.ReadLine()!, out int result);
-                if (!success) {Console.WriteLine("Invalid character");continue;}
-                if (result < 1 || result > 9){Console.WriteLine("Invalid option");continue;}
-                if (!_gameBoard.GetFreeIndices().Contains(result-1)){Console.WriteLine("Occupied");continue;}
-                return result-1;
+                if (!success) { Console.WriteLine("Invalid character"); continue; }
+                if (result < 1 || result > 9) { Console.WriteLine("Invalid option"); continue; }
+                if (!_gameBoard.GetFreeIndices().Contains(result - 1)) { Console.WriteLine("Occupied"); continue; }
+                return result - 1;
             }
         }
-        private static void GameOver(){
+        private static void GameOver()
+        {
             Console.WriteLine($"GC {GC.GetTotalMemory(true)}");
         }
-        private int GetCPUMove(){
+        private int GetCPUMove()
+        {
             Board boardCopy = _gameBoard.Copy();
-            int[] freeIndices =  _gameBoard.GetFreeIndices();
+            int[] freeIndices = _gameBoard.GetFreeIndices();
             int defensiveMove = -1;
             // attack, defend, braindead
-            foreach(int freeMove in freeIndices){
-                boardCopy.MakeMove(freeMove,'O');
-                if (boardCopy.CheckState() == 'O'){
+            foreach (int freeMove in freeIndices)
+            {
+                boardCopy.MakeMove(freeMove, 'O');
+                if (boardCopy.CheckState() == 'O')
+                {
                     return freeMove;
                 }
-                boardCopy.MakeMove(freeMove,'X');
-                if (boardCopy.CheckState() == 'X'){
-                    defensiveMove = freeMove;   
+                boardCopy.MakeMove(freeMove, 'X');
+                if (boardCopy.CheckState() == 'X')
+                {
+                    defensiveMove = freeMove;
                 }
-                boardCopy.MakeMove(freeMove,' ');
+                boardCopy.MakeMove(freeMove, ' ');
             }
             return defensiveMove != -1 ? defensiveMove : freeIndices[_random.Next(freeIndices.Length)];
         }
-        public void Run(){
-            while(true){
+        public void Run()
+        {
+            while (true)
+            {
                 _gameBoard.PrintBoard();
-                Console.WriteLine($"It is player {_currentTurn}'s turn (" + (_currentTurn == 'X' ? "You" : "CPU" ) + ")");
-                if (_currentTurn == 'X'){
+                Console.WriteLine($"It is player {_currentTurn}'s turn (" + (_currentTurn == 'X' ? "You" : "CPU") + ")");
+                if (_currentTurn == 'X')
+                {
                     int playerMove = AskMove();
-                    _gameBoard.MakeMove(playerMove,'X');
-                }else{
+                    _gameBoard.MakeMove(playerMove, 'X');
+                }
+                else
+                {
                     _gameBoard.MakeMove(GetCPUMove(), 'O');
-                    Thread.Sleep(_random.Next(250,750));
+                    Thread.Sleep(_random.Next(250, 750));
                 }
                 Console.Clear();
                 char result = _gameBoard.CheckState();
-                switch(result){
+                switch (result)
+                {
                     case ' ':
                         break;
                     case 'T':
@@ -135,7 +166,8 @@ namespace im_bored.tic_tac_toe{
                 SwapTurn();
             }
         }
-        private void SwapTurn(){
+        private void SwapTurn()
+        {
             _currentTurn = _currentTurn == 'X' ? 'O' : 'X';
         }
     }
