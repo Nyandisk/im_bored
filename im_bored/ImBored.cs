@@ -54,7 +54,6 @@ namespace im_bored
                     "snek 1 (console)",
                     "snek 2 (sfml)\n = tic-tac-toe = ",
                     "tic-tac-toe (console)",
-                    "dissolve tic-tac-toe (sfml & multiplayer)\n = other = ",
                     "quit"
                     ], "choose something to do\n = snek franchise = "))
                 {
@@ -71,8 +70,6 @@ namespace im_bored
                         ttt.Run();
                         break;
                     case 4:
-                        break;
-                    case 5:
                         Environment.Exit(0);
                         break;
                     default:
